@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by sabin on 8/3/2017.
  */
 public interface ArticleRepository extends CrudRepository<Article,Integer> {
-    boolean findByTileAAndCategory(String title, String category);
+    boolean findByTitleAndCategory(String title, String category);
 }
