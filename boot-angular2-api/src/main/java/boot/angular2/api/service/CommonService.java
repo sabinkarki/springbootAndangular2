@@ -11,9 +11,9 @@ public interface CommonService<T,R> {
 
      List<R> findAll();
 
-    R create(R r);
+    boolean create(R r);
 
     void delete(T t);
 
-    R update(R r);
+    void update(R r);
 }

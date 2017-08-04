@@ -33,8 +33,14 @@ public class ArticleServiceIml implements ArticleService {
     }
 
     @Override
-    public Article create(Article article) {
-        return this.articleRepository.save(article);
+    public synchronized boolean create(Article article) {
+
+        if ( this.articleRepository.findByTitleAndCategory(article.getTitle(), article.getCategory())) {
+            return false;
+        } else {
+            this.articleRepository.save(article);
+            return true;
+        }
     }
 
     @Override
@@ -44,9 +50,9 @@ public class ArticleServiceIml implements ArticleService {
     }
 
     @Override
-    public Article update(Article article) {
+    public void update(Article article) {
         Article artcl=this.articleRepository.findOne(article.getArticleId());
         BeanUtils.copyProperties(article, artcl);
-        return this.articleRepository.save(artcl);
+         this.articleRepository.save(artcl);
     }
 }
