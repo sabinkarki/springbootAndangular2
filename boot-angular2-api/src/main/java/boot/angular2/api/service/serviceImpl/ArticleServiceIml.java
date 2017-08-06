@@ -35,7 +35,7 @@ public class ArticleServiceIml implements ArticleService {
     @Override
     public synchronized boolean create(Article article) {
 
-        if ( this.articleRepository.findByTitleAndCategory(article.getTitle(), article.getCategory())) {
+        if ( this.articleRepository.findByTitleAndCategory(article.getTitle(), article.getCategory())!=null) {
             return false;
         } else {
             this.articleRepository.save(article);

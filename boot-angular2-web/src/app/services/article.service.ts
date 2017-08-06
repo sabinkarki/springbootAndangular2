@@ -18,6 +18,15 @@ export class ArticleService {
     return this.http.get(this.allArticlesUrl).map(this.extractData).catch(this.handleError);
   }
 
+  //Create article
+  createArticle(article: Article):Observable<number> {
+    let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: cpHeaders });
+    return this.http.post(this.articleUrl, article, options)
+      .map(success => success.status)
+      .catch(this.handleError);
+  }
+
   //success
   private extractData(res: Response) {
     let body = res.json();

@@ -1,4 +1,42 @@
 <h1>Angular 2 CRUD Operation</h1>
+<h3 *ngIf="articleIdToUpdate; else create">
+  Update Article for Id: {{articleIdToUpdate}}
+</h3>
+
+<ng-template #create>
+  <h3> Create New Article </h3>
+</ng-template>
+
+<form [formGroup]="articleForm" (ngSubmit)="onArticleFormSubmit()">
+  <div class="container">
+    <table class="table">
+      <tr>
+        <td>Enter the Title</td>
+        <td>
+          <input formControlName="title">
+          <label *ngIf="articleForm.get('title').invalid && processValidation" [ngClass]="'error'"> Title is
+            required. </label>
+        </td>
+      </tr>
+      <tr>
+        <td>Enter Category</td>
+        <td><input formControlName="category">
+          <label *ngIf="articleForm.get('category').invalid && processValidation" [ngClass]="'error'"> Category is
+            required. </label>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button *ngIf="!articleIdToUpdate">CREATE</button>
+          <button *ngIf="articleIdToUpdate">UPDATE</button>
+          <button (click)="backToCreateArticle()" *ngIf="articleIdToUpdate">Go Back</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</form>
+
 
 <div class="container">
   <h2>Article Details</h2>
@@ -12,10 +50,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let article of allArticles" class="table-hover" >
-      <td>{{article.articleId}}</td> <td>{{article.title}}</td> <td>{{article.category}}</td>
-      <td><button type="button" (click)="loadArticleToEdit(article.articleId)">Edit</button> </td>
-      <td><button type="button" (click)="deleteArticle(article.articleId)">Delete</button></td>
+    <tr *ngFor="let article of allArticles" class="table-hover">
+      <td>{{article.articleId}}</td>
+      <td>{{article.title}}</td>
+      <td>{{article.category}}</td>
+      <td>
+        <button type="button" (click)="loadArticleToEdit(article.articleId)">Edit</button>
+      </td>
+      <td>
+        <button type="button" (click)="deleteArticle(article.articleId)">Delete</button>
+      </td>
     </tr>
     </tbody>
   </table>
