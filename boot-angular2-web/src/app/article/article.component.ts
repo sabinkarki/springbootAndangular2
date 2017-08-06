@@ -53,8 +53,17 @@ export class ArticleComponent implements OnInit {
           errorCode => this.statusCode = errorCode);
     }
     else {
+
       //Handle update article
       let article = new Article(this.articleIdToUpdate, title, category);
+      this.articleService.updateArticle(article)
+        .subscribe(successCode => {
+            this.statusCode = successCode;
+            this.getAllArticles();
+            this.backToCreateArticle();
+          },
+          errorCode => this.statusCode = errorCode);
+
     }
   }
 
@@ -79,4 +88,16 @@ export class ArticleComponent implements OnInit {
       errorCode => this.statusCode = errorCode);
   }
 
+  //Load article by id to edit
+  loadArticleToEdit(articleId: string) {
+    this.preProcessConfigurations();
+    this.articleService.getArticleById(articleId)
+      .subscribe(article => {
+          this.articleIdToUpdate = article.articleId;
+          this.articleForm.setValue({title: article.title, category: article.category});
+          this.processValidation = true;
+          this.requestProcessing = false;
+        },
+        errorCode => this.statusCode = errorCode);
+  }
 }
