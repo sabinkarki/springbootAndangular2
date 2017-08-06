@@ -67,12 +67,6 @@ export class ArticleComponent implements OnInit {
     }
   }
 
-  //Perform preliminary processing configurations
-  preProcessConfigurations() {
-    this.statusCode = null;
-    this.requestProcessing = true;
-  }
-
   //Go back from update to create
   backToCreateArticle() {
     this.articleIdToUpdate = null;
@@ -99,5 +93,23 @@ export class ArticleComponent implements OnInit {
           this.requestProcessing = false;
         },
         errorCode => this.statusCode = errorCode);
+  }
+
+  //Delete article
+  deleteArticle(articleId: string) {
+    this.preProcessConfigurations();
+    this.articleService.deleteArticleById(articleId)
+      .subscribe(successCode => {
+          this.statusCode = successCode;
+          this.getAllArticles();
+          this.backToCreateArticle();
+        },
+        errorCode => this.statusCode = errorCode);
+  }
+
+  //Perform preliminary processing configurations
+  preProcessConfigurations() {
+    this.statusCode = null;
+    this.requestProcessing = true;
   }
 }

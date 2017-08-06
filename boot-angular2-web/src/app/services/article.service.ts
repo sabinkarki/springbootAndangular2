@@ -48,6 +48,17 @@ export class ArticleService {
       .catch(this.handleError);
   }
 
+  //Delete article
+  deleteArticleById(articleId: string): Observable<number> {
+    let cpHeaders = new Headers({'Content-Type': 'application/json'});
+    let cpParams = new URLSearchParams();
+    cpParams.set('id', articleId);
+    let options = new RequestOptions({headers: cpHeaders, params: cpParams});
+    return this.http.delete(this.articleUrl, options)
+      .map(success => success.status)
+      .catch(this.handleError);
+  }
+
   //success
   private extractData(res: Response) {
     let body = res.json();
