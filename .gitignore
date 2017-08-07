@@ -29,7 +29,3 @@ dist/
 nbdist/
 .nb-gradle/
 
-web
-sh.exe.stackdump
-guru-finder-api/.checkstyle
-guru-finder-api/mvnw.cmd
